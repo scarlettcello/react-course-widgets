@@ -1,24 +1,36 @@
 import React, { useState } from 'react';
+import Header from './components/Header';
 import Accordion from './components/Accordion';
 import items from './data/accordion.data';
 import Search from './components/Search';
 import Dropdown from './components/Dropdown';
 import options from './data/color.options';
+import Translate from './components/Translate';
+import Route from './components/Route';
 
-function App() {
+const App = () => {
   const [selected, setSelected] = useState(options[0]);
-  const [showDropdown, setShowDropdown] = useState(true);
 
   return (
     <div>
-      <button onClick={() => setShowDropdown(!showDropdown)}>Toggle Dropdown</button>
-      {showDropdown ?
+    <Header />
+      <Route path="/">
+        <Accordion items={items} />
+      </Route> 
+      <Route path="/list">
+        <Search />
+      </Route> 
+      <Route path="/dropdown">
         <Dropdown 
-          selected={selected}
+          label="Select a color" 
+          options={options} 
+          selected={selected} 
           onSelectedChange={setSelected} 
-          options={options}
-        /> : null
-      }        
+        />
+      </Route> 
+      <Route path="/translate">
+        <Translate />
+      </Route> 
     </div>
   );
 }
